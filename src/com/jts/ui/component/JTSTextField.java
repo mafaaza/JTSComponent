@@ -37,6 +37,7 @@ public class JTSTextField extends javax.swing.JPanel {
         label = new javax.swing.JLabel();
         text = new javax.swing.JTextField();
 
+        label.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         label.setText(" ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -77,6 +78,9 @@ public class JTSTextField extends javax.swing.JPanel {
     private int height;
     private Font JCTextFont;
     private Font JCCaptionsFont;
+    private boolean JCTextEditable = true;
+    
+    
 
     /**
      * @return the JCTextLength
@@ -151,7 +155,8 @@ public class JTSTextField extends javax.swing.JPanel {
      */
     public void setJCCaptionsWidth(int JCCaptionsWidth) {
         this.JCCaptionsWidth = JCCaptionsWidth;
-        if(JCCaptionsWidth > 0){
+        if (this.JCCaptionsWidth > 0) {
+            this.label.setMinimumSize(new Dimension(JCCaptionsWidth * 8, height));
             this.label.setSize(new Dimension(JCCaptionsWidth * 8, height));
         }
     }
@@ -185,7 +190,22 @@ public class JTSTextField extends javax.swing.JPanel {
         this.JCCaptionsFont = JCLabelFont;
         this.label.setFont(JCTextFont);
     }
-    
+
+    /**
+     * @return the JCTextEditable
+     */
+    public boolean isJCTextEditable() {
+        return JCTextEditable;
+    }
+
+    /**
+     * @param JCTextEditable the JCTextEditable to set
+     */
+    public void setJCTextEditable(boolean JCTextEditable) {
+        this.JCTextEditable = JCTextEditable;
+        this.text.setEditable(JCTextEditable);
+    }
+
     /**
      * *************************************************************************
      * Enum area ************************************************************
@@ -210,15 +230,17 @@ public class JTSTextField extends javax.swing.JPanel {
      * Initial area ************************************************************
      */
     private void jcinitComponent() {
-        JCTextLength = 0;
+        JCTextLength = 1;
         JCTextCase = Case.NORMAL_CASE;
         JCTextType = TextType.OL_ALL;
         JCCaptions = "Captions";
         label.setText(JCCaptions);
         JCCaptionsWidth = 0;
-        height = 20;
+        height = 23;
         JCTextFont = this.text.getFont();
         JCCaptionsFont = this.label.getFont();
+        setJCTextEditable(true);
+        setJCTextLength(1);
     }
 
     /**
@@ -274,8 +296,8 @@ public class JTSTextField extends javax.swing.JPanel {
                     return;
                 }
             }
-            if(null != JCTextCase){
-                switch(JCTextCase){
+            if (null != JCTextCase) {
+                switch (JCTextCase) {
                     case LOWER_CASE:
                         str = str.toLowerCase();
                         break;
